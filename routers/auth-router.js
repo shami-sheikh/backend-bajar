@@ -1,0 +1,11 @@
+const express=require("express")
+const { home, register, login, user } = require("../controllers/auth-controller")
+const {signupSchema, loginSchema}=require('../validation/validation')
+const Valide=require("../middlwere/valid-midllewere")
+const authMiddleware = require("../middlwere/authmiddllwere")
+const router=express.Router()
+router.route("/").get(home)
+router.route("/register").post(Valide(signupSchema),register)
+router.route("/login").post(Valide(loginSchema),login)
+router.route("/user").get(authMiddleware, user)
+module.exports=router
