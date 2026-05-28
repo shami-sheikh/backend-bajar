@@ -18,6 +18,7 @@ app.use(cors({
   ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials:true
 }));
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -29,6 +30,17 @@ app.use("/auth/data", serviceRouter);
 // for admin routers
 app.use("/auth/user", adminRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Serve frontend static build (if present)
+const frontendDist = path.join(__dirname, "../frontend/dist");
+app.use(express.static(frontendDist));
+// Fallback: serve index.html for non-API GET requests (single-page app)
+app.use((req, res, next) => {
+  if (req.method !== "GET") return next();
+  const isApi = req.path.startsWith("/auth") || req.path.startsWith("/api") || req.path.startsWith("/uploads");
+  if (isApi) return next();
+  res.sendFile(path.join(frontendDist, "index.html"));
+});
 
 const port = process.env.PORT || 5000;
 db()
