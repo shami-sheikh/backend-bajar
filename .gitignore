@@ -37,6 +37,11 @@ out/
 coverage/
 .nyc_output/
 
+# Uploads and local artifacts
+uploads/
+*.sqlite
+*.db
+
 # ========================
 # PM2 / Process Managers
 # ========================
