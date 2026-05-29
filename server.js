@@ -15,6 +15,7 @@ app.use(cors({
     "http://localhost:5174",
     "http://localhost:3000",
     "http://localhost:5000",
+    "https://frontend-bajar.vercel.app",
   ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
